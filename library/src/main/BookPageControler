@@ -1,0 +1,53 @@
+package com.library.dea.controller;
+
+import com.library.dea.entity.Book;
+import com.library.dea.service.BookService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/books")
+public class BookPageController {
+
+    private final BookService bookService;
+
+    public BookPageController(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    // show all books
+    @GetMapping
+    public String showBooks(Model model) {
+        model.addAttribute("books", bookService.showAll());
+        return "library/list";
+    }
+
+    // form for new book
+    @GetMapping("/new")
+    public String form(Model model) {
+        model.addAttribute("book", new Book());
+        return "library/new";
+    }
+
+    // save new book
+    @PostMapping
+    public String save(@ModelAttribute Book book) {
+        bookService.add(book);
+        return "redirect:/books";
+    }
+
+    // edit book
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        model.addAttribute("book", bookService.showById(id));
+        return "library/edit";
+    }
+
+    // delete book
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        bookService.deleteBook(id);
+        return "redirect:/books";
+    }
+}
