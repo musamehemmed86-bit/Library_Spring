@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+
+    <style>
+        body {
+            padding: 40px;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #2b2b2b;
+            color: #e6e6e6;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background: #f4f6f8;
+                color: #333;
+            }
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        .add-btn {
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            background: #2ecc71;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .add-btn:hover {
+            background: #27ae60;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th {
+            background: #3c3f41;
+            color: #ffffff;
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #555;
+        }
+
+        @media (prefers-color-scheme: light) {
+            th {
+                background: #e9ecef;
+                color: #333;
+                border-color: #ccc;
+            }
+        }
+
+        td {
+            padding: 10px;
+            border: 1px solid #555;
+        }
+
+        @media (prefers-color-scheme: light) {
+            td {
+                border-color: #ccc;
+            }
+        }
+
+        tr:nth-child(even) {
+            background: #323232;
+        }
+
+        @media (prefers-color-scheme: light) {
+            tr:nth-child(even) {
+                background: #f9f9f9;
+            }
+        }
+
+        tr:hover {
+            background: #404040;
+        }
+
+        @media (prefers-color-scheme: light) {
+            tr:hover {
+                background: #eef2f6;
+            }
+        }
+
+        .actions a {
+            margin-right: 8px;
+            font-weight: 600;
+            color: #4da3ff;
+            text-decoration: none;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        .empty {
+            margin-top: 20px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Book List</h2>
+
+<a class="add-btn" th:href="@{/books/new/{id}(id=${book.id})}">+ Add New Book</a>
+
+<table th:if="${#lists.size(books) > 0}">
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.price}"></td>
+        <td th:text="${book.amount}"></td>
+        <td class="actions">
+            <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
+            <a th:href="@{/books/delete/{id}(id=${book.id})}"
+               onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+</table>
+
+
+
+</body>
+</html>
