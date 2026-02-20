@@ -1,122 +1,289 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Books</title>
-
-    <style>
-        body {
-            padding: 40px;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #2b2b2b;
-            color: #e6e6e6;
-        }
-
-        @media (prefers-color-scheme: light) {
-            body {
-                background: #f4f6f8;
-                color: #333;
-            }
-        }
-
-        h2 {
-            margin-bottom: 15px;
-        }
-
-        .add-btn {
-            display: inline-block;
-            margin-bottom: 15px;
-            padding: 8px 14px;
-            border-radius: 6px;
-            background: #2ecc71;
-            color: #fff;
-            font-weight: 600;
-            text-decoration: none;
-        }
-
-        .add-btn:hover {
-            background: #27ae60;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th {
-            background: #3c3f41;
-            color: #ffffff;
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #555;
-        }
-
-        @media (prefers-color-scheme: light) {
-            th {
-                background: #e9ecef;
-                color: #333;
-                border-color: #ccc;
-            }
-        }
-
-        td {
-            padding: 10px;
-            border: 1px solid #555;
-        }
-
-        @media (prefers-color-scheme: light) {
-            td {
-                border-color: #ccc;
-            }
-        }
-
-        tr:nth-child(even) {
-            background: #323232;
-        }
-
-        @media (prefers-color-scheme: light) {
-            tr:nth-child(even) {
-                background: #f9f9f9;
-            }
-        }
-
-        tr:hover {
-            background: #404040;
-        }
-
-        @media (prefers-color-scheme: light) {
-            tr:hover {
-                background: #eef2f6;
-            }
-        }
-
-        .actions a {
-            margin-right: 8px;
-            font-weight: 600;
-            color: #4da3ff;
-            text-decoration: none;
-        }
-
-        .actions a:hover {
-            text-decoration: underline;
-        }
-
-        .empty {
-            margin-top: 20px;
-            font-style: italic;
-            opacity: 0.8;
-        }
-    </style>
 </head>
-
 <body>
+<style>
+    /* ===== BASE ===== */
+  body {
+      padding: 40px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #111, #1a1a1a);
+      color: #eaeaea;
+  }
 
+  /* ===== Heading ===== */
+  h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: #ffffff;
+  }
+
+  /* ===== Buttons Base ===== */
+  .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+      border: 2px solid transparent;
+      margin-right: 8px;
+  }
+
+  /* ===== Green-Black Button ===== */
+  .btn-green {
+      background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+      color: #2ecc71;
+      border: 2px solid #2ecc71;
+  }
+
+  .btn-green:hover {
+      background: #2ecc71;
+      color: #000;
+      box-shadow: 0 0 15px #2ecc71;
+      transform: translateY(-2px);
+  }
+
+  /* ===== Red-Black Button ===== */
+  .btn-red {
+      background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+      color: #e74c3c;
+      border: 2px solid #e74c3c;
+  }
+
+  .btn-red:hover {
+      background: #e74c3c;
+      color: #000;
+      box-shadow: 0 0 15px #e74c3c;
+      transform: translateY(-2px);
+  }
+
+  /* ===== Table Container (Glass Effect) ===== */
+  .table-wrapper {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+  }
+
+  /* ===== Table ===== */
+  table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+  }
+
+  /* Table Header */
+  th {
+      background: #111;
+      color: #2ecc71;
+      padding: 12px;
+      text-align: left;
+      border-bottom: 2px solid #2ecc71;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+  }
+
+  /* Table Cells */
+  td {
+      padding: 12px;
+      border-bottom: 1px solid #333;
+      transition: 0.3s;
+  }
+
+  /* Zebra rows */
+  tr:nth-child(even) {
+      background: rgba(255,255,255,0.03);
+  }
+
+  /* Hover effect */
+  tr:hover {
+      background: rgba(46, 204, 113, 0.08);
+      transform: scale(1.01);
+  }
+/* ===== Input Base ===== */
+input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 2px solid #2a2a2a;
+    background: linear-gradient(145deg, #111, #1a1a1a);
+    color: #eaeaea;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+/* Placeholder */
+input::placeholder,
+textarea::placeholder {
+    color: #777;
+}
+
+/* Focus effect (Green Neon) */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2ecc71;
+    box-shadow: 0 0 12px rgba(46, 204, 113, 0.6);
+    background: #141414;
+}
+
+/* Red variant (for important fields) */
+.input-red {
+    border: 2px solid #e74c3c;
+}
+
+.input-red:focus {
+    box-shadow: 0 0 12px rgba(231, 76, 60, 0.7);
+}
+
+/* Label style */
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: #aaa;
+}
+
+/* Form container */
+.form-container {
+    max-width: 500px;
+    padding: 25px;
+    background: rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.6);
+}
+  /* Smooth animation */
+  tr {
+      transition: 0.3s ease;
+  }
+
+/* Общий стиль */
+.btn {
+    padding: 12px 35px;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== SEARCH (Green Neon) ===== */
+.btn-search {
+    color: #2ecc71;
+    border: 2px solid #2ecc71;
+}
+
+.btn-search:hover {
+    background: #2ecc71;
+    color: #000;
+    box-shadow: 0 0 10px #2ecc71,
+                0 0 25px #2ecc71,
+                0 0 50px rgba(46, 204, 113, 0.6);
+    transform: translateY(-3px);
+}
+
+/* ===== RESET (Red Neon) ===== */
+.btn-reset {
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+}
+
+.btn-reset:hover {
+    background: #e74c3c;
+    color: #000;
+    box-shadow: 0 0 10px #e74c3c,
+                0 0 25px #e74c3c,
+                0 0 50px rgba(231, 76, 60, 0.6);
+    transform: translateY(-3px);
+}
+
+/* Нажатие */
+.btn:active {
+    transform: scale(0.95);
+}
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Общий стиль кнопок */
+.page-btn {
+    padding: 8px 14px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #2ecc71;
+    background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+    border: 2px solid #2ecc71;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Hover эффект */
+.page-btn:hover {
+    background: #2ecc71;
+    color: #000;
+    box-shadow: 0 0 8px #2ecc71,
+                0 0 20px #2ecc71,
+                0 0 40px rgba(46, 204, 113, 0.6);
+    transform: translateY(-2px);
+}
+
+/* Активная страница */
+.page-btn.active {
+    background: #2ecc71;
+    color: #000;
+    box-shadow: 0 0 10px #2ecc71,
+                0 0 25px #2ecc71;
+}
+
+/* Стрелки чуть больше */
+.arrow {
+    padding: 8px 16px;
+    font-size: 18px;
+}
+
+</style>
 <h2>Book List</h2>
 
-<a class="add-btn" th:href="@{/books/new/{id}(id=${book.id})}">+ Add New Book</a>
+<a th:href="@{/books/new}" class="btn btn-green">+ Add New Book</a>
 
-<table th:if="${#lists.size(books) > 0}">
+
+<br>
+
+<form th:action="@{/books/search}" method="get" style="margin-bottom:15px;">
+    <input type="text"
+           name="keyword"
+           placeholder="Search by Title"
+           th:value="${keyword}">
+
+    <button type="submit" class="btn btn-search">Search</button>
+    <a th:href="@{/books}" class="btn btn-reset">Reset</a>
+
+</form>
+
+<table border="1">
     <tr>
         <th>Title</th>
         <th>Author</th>
@@ -124,21 +291,52 @@
         <th>Amount</th>
         <th>Actions</th>
     </tr>
-
     <tr th:each="book : ${books}">
         <td th:text="${book.title}"></td>
         <td th:text="${book.author}"></td>
         <td th:text="${book.price}"></td>
         <td th:text="${book.amount}"></td>
-        <td class="actions">
-            <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
+        <td>
+            <a th:href="@{/books/edit/{id}(id=${book.id})}"
+               class="btn btn-green"
+               style="padding:6px 12px; font-size:12px;">
+                Edit
+            </a>
+
             <a th:href="@{/books/delete/{id}(id=${book.id})}"
-               onclick="return confirm('Are you sure?')">Delete</a>
+               class="btn btn-red"
+               style="padding:6px 12px; font-size:12px;"
+               onclick="return confirm('Are you sure?')">
+                Delete
+            </a>
         </td>
     </tr>
 </table>
+<div style="margin-top:20px">
+    <a th:if="${currentPage > 0}" th:href="@{/books(page=${currentPage - 1}, size=${size})}">←</a>
 
+    <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
 
+<!--            если есть search-->
+            <a
+                    th:if="${keyword != null}"
+                    th:href="@{/books/search(keyword=${keyword}, page=${i}, size=${size})}"
+                    th:text="${i + 1}"
+                    style="${i == currentPage} ? 'font-weight:bold' : ''">
+            </a>
 
+        <!--            если обычный список-->
+            <a
+                    th:if="${keyword == null}"
+                    th:href="@{/books(page=${i}, size=${size})}"
+                    th:text="${i + 1}"
+                    style="${i == currentPage} ? 'font-weight:bold' : ''">
+            </a>
+        </span>
+
+    <a th:if="${currentPage + 1 < totalPages}" th:href="@{/books(page=${currentPage + 1}, size=${size})}">→</a>
+
+</div>
+</div>
 </body>
 </html>
